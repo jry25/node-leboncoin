@@ -57,17 +57,15 @@ class Search
       normalizeWhitespace: true
       decodeEntities: true
     $ = cheerio.load html, opts
-    for entry in $('.list-lbc > a')
-      date = []
-      date.push clean_string $(line).html() for line in $(entry).find('.date div')
+    for entry in $('#listingAds > .list.mainList > .tabsContent > ul > li > a')
 
       results.push
-        href:  entry.attribs.href
+        href:  'https:' + entry.attribs.href
         title: entry.attribs.title
-        date:  date
-        location: clean_string $(entry).find('.placement').html()
-        price: clean_string $(entry).find('.price').html()
-        image: $(entry).find('.image img').attr('src')
+        date:  clean_string $(entry).find('.item_infos > aside > p').html()
+        location: clean_string $(entry).find('.item_infos > p:nth-child(3)').html()
+        price: clean_string $(entry).find('.item_price').html()
+        image: $(entry).find('.lazyload').attr('data-imgsrc')
     return results
 
   perform: (callback) =>

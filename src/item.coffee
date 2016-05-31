@@ -35,16 +35,16 @@ class Item
       normalizeWhitespace: true
       decodeEntities: true
     $ = cheerio.load html, opts
-    for row in $('.lbcParams > table > tr')
-      key = clean_string $(row).find('th').html().replace(':', ' ')
-      value = clean_string $(row).find('td').html()
+    for row in $('#adview > div.line')
+      key = clean_string $(row).find('.property').html()
+      value = clean_string $(row).find('.value').html()
       attrs[key] = value
+# TODO récupérer variable JS images_thumbs
+    # attrs.thumbs = []
+    # for thumb in $('#thumbs_carousel .thumbs_cadre span')
+      # attrs.thumbs.push $(thumb).css('background-image').split("'")[1]
 
-    attrs.thumbs = []
-    for thumb in $('#thumbs_carousel .thumbs_cadre span')
-      attrs.thumbs.push $(thumb).css('background-image').split("'")[1]
-
-    attrs.description = clean_string $('.AdviewContent > .content').html()
+    attrs.description = clean_string $('#adview .line.properties_description').html()
     return attrs
 
   getPhoneNumber: (callback) =>
